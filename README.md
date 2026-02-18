@@ -36,7 +36,19 @@ The Camera Middleware serves as an intermediary layer between camera sensor driv
 
 ## Software architecture
 
-![Architecture](_htmresc/CMW_Architecture.jpg)
+![Architecture](_htmresc/CMW_Architecture.png)
+
+Supported sensors:
+- `ST vd1943`
+- `ST vd55g1`
+- `ST vd56g3`
+- `ST vd5943`
+- `ST vd65g4`
+- `ST vd66gy`
+- `ov5640`
+- `imx335`
+
+**Note**: Some sensors use the STM32 ISP library, while others do not.
 
 ## Sensors drivers
 

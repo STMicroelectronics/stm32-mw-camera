@@ -38,6 +38,12 @@ This middleware simplifies the development process for applications that require
 
 ## Update history
 
+### V1.5.1 / February 2025
+
+- Update Docs
+- Change default configuration of vd5943 to RAW10
+- Enable Raw10 support for vd66gy and vd56g3
+
 ### V1.5.0 / December 2025
 
 - Update Isp library to v1.3.0

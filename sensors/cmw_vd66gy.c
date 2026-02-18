@@ -255,6 +255,24 @@ static int32_t CMW_VD66GY_Init(void *io_ctx, CMW_Sensor_Init_t *initSensor)
     return CMW_ERROR_WRONG_PARAM;
   }
 
+  switch (sensor_config->pixel_format)
+  {
+    case CMW_PIXEL_FORMAT_DEFAULT:
+    case CMW_PIXEL_FORMAT_RAW10:
+    {
+      config.pixel_depth = 10;
+      break;
+    }
+    case CMW_PIXEL_FORMAT_RAW8:
+    {
+      config.pixel_depth = 8;
+      break;
+    }
+    default:
+      return CMW_ERROR_COMPONENT_FAILURE;
+      break;
+  }
+
   config.ext_clock_freq_in_hz = CAMERA_VD66GY_FREQ_IN_HZ; /* Default clock frequency */
   config.line_len = sensor_config->line_len;
   config.out_itf.datalane_nb = 2;
@@ -292,7 +310,7 @@ void CMW_VD66GY_SetDefaultSensorValues(CMW_VD66GY_config_t *vd66gy_config)
 {
   assert(vd66gy_config != NULL);
   vd66gy_config->line_len = 0;
-  vd66gy_config->pixel_format = CMW_PIXEL_FORMAT_RAW8;
+  vd66gy_config->pixel_format = CMW_PIXEL_FORMAT_RAW10;
 }
 
 static int32_t CMW_VD66GY_Start(void *io_ctx)
@@ -533,8 +551,8 @@ int32_t CMW_VD66GY_GetSensorInfo(void *io_ctx, ISP_SensorInfoTypeDef *info)
   /* Get isp bayer pattern info */
   info->bayer_pattern = ((CMW_VD66GY_t *)io_ctx)->ctx_driver.bayer - 1;
 
-  /* Get color depth */
-  info->color_depth = VD6G_COLOR_DEPTH_RAW8;
+  /* Color depth derives from the current driver configuration */
+  info->color_depth = ((CMW_VD66GY_t *)io_ctx)->ctx_driver.ctx.config_save.pixel_depth;
 
   /* Get resolution info */
   info->width = VD6G_MAX_WIDTH;

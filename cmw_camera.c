@@ -1470,10 +1470,16 @@ static int32_t CMW_CAMERA_VD66GY_Init( CMW_Sensor_Init_t *initSensors_params)
   switch (sensor_config->pixel_format)
   {
     case CMW_PIXEL_FORMAT_RAW8:
-    case CMW_PIXEL_FORMAT_DEFAULT:
     {
       dt_format = DCMIPP_CSI_DT_BPP8;
       dt = DCMIPP_DT_RAW8;
+      break;
+    }
+    case CMW_PIXEL_FORMAT_RAW10:
+    case CMW_PIXEL_FORMAT_DEFAULT:
+    {
+      dt_format = DCMIPP_CSI_DT_BPP10;
+      dt = DCMIPP_DT_RAW10;
       break;
     }
     default:
@@ -1565,10 +1571,16 @@ static int32_t CMW_CAMERA_VD56G3_Init( CMW_Sensor_Init_t *initSensors_params)
   switch (sensor_config->pixel_format)
   {
     case CMW_PIXEL_FORMAT_RAW8:
-    case CMW_PIXEL_FORMAT_DEFAULT:
     {
       dt_format = DCMIPP_CSI_DT_BPP8;
       dt = DCMIPP_DT_RAW8;
+      break;
+    }
+    case CMW_PIXEL_FORMAT_RAW10:
+    case CMW_PIXEL_FORMAT_DEFAULT:
+    {
+      dt_format = DCMIPP_CSI_DT_BPP10;
+      dt = DCMIPP_DT_RAW10;
       break;
     }
     default:
@@ -1793,17 +1805,17 @@ static int32_t CMW_CAMERA_VD5943_Init( CMW_Sensor_Init_t *initSensors_params)
 
   switch (sensor_config->pixel_format)
   {
-    case CMW_PIXEL_FORMAT_RAW10:
-    {
-      dt_format = DCMIPP_CSI_DT_BPP10;
-      dt = DCMIPP_DT_RAW10;
-      break;
-    }
     case CMW_PIXEL_FORMAT_RAW8:
-    case CMW_PIXEL_FORMAT_DEFAULT:
     {
       dt_format = DCMIPP_CSI_DT_BPP8;
       dt = DCMIPP_DT_RAW8;
+      break;
+    }
+    case CMW_PIXEL_FORMAT_RAW10:
+    case CMW_PIXEL_FORMAT_DEFAULT:
+    {
+      dt_format = DCMIPP_CSI_DT_BPP10;
+      dt = DCMIPP_DT_RAW10;
       break;
     }
     default:

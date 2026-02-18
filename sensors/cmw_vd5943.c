@@ -328,7 +328,7 @@ void CMW_VD5943_SetDefaultSensorValues(CMW_VD5943_config_t *vd5943_config)
 {
   assert(vd5943_config != NULL);
   vd5943_config->CSI_PHYBitrate = VD1943_DEFAULT_DATARATE;
-  vd5943_config->pixel_format = CMW_PIXEL_FORMAT_RAW8;
+  vd5943_config->pixel_format = CMW_PIXEL_FORMAT_RAW10;
 }
 
 static int32_t CMW_VD5943_Start(void *io_ctx)

@@ -263,6 +263,24 @@ static int32_t CMW_VD56G3_Init(void *io_ctx, CMW_Sensor_Init_t *initSensor)
     return CMW_ERROR_WRONG_PARAM;
   }
 
+  switch (sensor_config->pixel_format)
+  {
+    case CMW_PIXEL_FORMAT_DEFAULT:
+    case CMW_PIXEL_FORMAT_RAW10:
+    {
+      config.pixel_depth = 10;
+      break;
+    }
+    case CMW_PIXEL_FORMAT_RAW8:
+    {
+      config.pixel_depth = 8;
+      break;
+    }
+    default:
+      return CMW_ERROR_COMPONENT_FAILURE;
+      break;
+  }
+
   config.ext_clock_freq_in_hz = CAMERA_VD56G3_FREQ_IN_HZ;
   config.line_len = sensor_config->line_len;
   config.out_itf.datalane_nb = 2;
@@ -300,7 +318,7 @@ void CMW_VD56G3_SetDefaultSensorValues(CMW_VD56G3_config_t *vd56g3_config)
 {
   assert(vd56g3_config != NULL);
   vd56g3_config->line_len = 0;
-  vd56g3_config->pixel_format = CMW_PIXEL_FORMAT_RAW8;
+  vd56g3_config->pixel_format = CMW_PIXEL_FORMAT_RAW10;
 }
 
 static int32_t CMW_VD56G3_Start(void *io_ctx)
@@ -457,9 +475,10 @@ static int32_t CMW_VD56G3_GetSensorInfo(void *io_ctx, ISP_SensorInfoTypeDef *inf
 
   /* Monochrome variant */
   info->bayer_pattern = ISP_DEMOS_TYPE_MONO;
-  info->color_depth = VD6G_COLOR_DEPTH_RAW8;
   info->width = VD6G_MAX_WIDTH;
   info->height = VD6G_MAX_HEIGHT;
+  /* Pixel depth derives from the current driver configuration */
+  info->color_depth = ((CMW_VD56G3_t *)io_ctx)->ctx_driver.ctx.config_save.pixel_depth;
 
   ret = VD6G_GetAnalogGainRegRange(&((CMW_VD56G3_t *)io_ctx)->ctx_driver, &again_regmin, &again_regmax);
   if (ret)
